@@ -26,7 +26,8 @@ body p {
 header {
     background-image: url(../images/pexels-photo-1141792.jpeg);
     background-size: cover;
-    background-position: 50% 17.2%;
+    background-position: 50% 35%;
+    background-attachment: fixed;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -83,6 +84,7 @@ header nav ul li a {
     background-image: url(../images/pexels-photo-1141792.jpeg);
     background-size: cover;
     background-position: 50% 35%;
+    background-attachment: fixed;
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-end;
