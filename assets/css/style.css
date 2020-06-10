@@ -93,7 +93,7 @@ header nav ul li a {
 
 .card {     
     display: flex;
-    margin: 350px 40px 30px 0;
+    margin: 40vh 40px 30px 0;
     justify-content: center;
     align-items: flex-end;
 }
@@ -123,7 +123,6 @@ header nav ul li a {
     border-right: solid 2px;
     text-align: center;
     margin: 20px;
-    flex: 0 150px;
     align-content: flex-start;
     text-align: right;
     padding: 20px 10px;
@@ -157,8 +156,8 @@ header nav ul li a {
 
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(3, 225px);
-    grid-template-rows: repeat(3, 225px); 
+    grid-template-columns: repeat(3, 25vw);
+    grid-template-rows: repeat(3, 15vw); 
     grid-gap: 10px;
 }
 
@@ -202,11 +201,8 @@ header nav ul li a {
 
 .contact {
     display: flex;
-    margin: 50px auto;  
-}
-
-.contact h2 {
-    align-items: flex-start;
+    margin: 50px auto; 
+    justify-content: center; 
 }
 
 .contact-nav ul {
@@ -215,11 +211,75 @@ header nav ul li a {
     align-items: center;
     list-style: none;
     height: 100%;
-    flex: 1 65%;
+
 }
 
 .contact-nav ul li a {
     text-decoration: none;
-    color: var(--secondary-color);
+    color: var(--tertiary-color);
     padding: 10px 15px;
+}
+
+@media screen and (max-width: 768px) {
+    .contact-nav ul {
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: space-between;
+    }
+
+    .contact-nav ul li a {
+        margin: 20px 0;
+    }
+}
+
+@media screen and (max-width: 575px) {
+    .header-nav ul {
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: flex-start;
+        margin-top: 30px;
+        margin-left: 0;
+    }
+
+    header nav {
+        padding: 0;
+    }
+
+    header {
+        height: 20vh;
+    }
+
+    .header-glyphs {
+        padding: 0 15px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .card {
+        margin: 15vh 10px 10px 0;
+        flex-direction: column;
+        align-items: flex-end;
+    }
+
+    .card img {
+        margin: 10px 20px;
+    }
+
+    .card h1 {
+        padding: 0 10px;
+    }
+
+    .prof-pic {
+        order: 1;
+    }
+
+    .my-name {
+        order: 2;
+    }
+
+    .grid-container {
+        grid-template-columns: repeat(2, 40vw);
+        grid-template-rows: repeat(5, 25vw); 
+        grid-gap: 10px;
+    }
 }
