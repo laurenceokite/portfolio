@@ -1,0 +1,40 @@
+@media screen and (max-width: 575px) {
+    header {
+        height: auto;
+        align-items: center;
+    }
+
+    header nav {
+        padding: 0;
+    }
+
+    .header-nav ul {
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    .secondary-glyph {
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+
+    .header-glyphs ul {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0;
+    }
+    
+    .nav-pic {
+        order: 1;
+    }
+
+    .header-glyphs {
+        order: 2;
+    }
+
+}
