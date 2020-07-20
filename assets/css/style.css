@@ -210,6 +210,11 @@ header nav ul li a {
     background-position: top;
 }
 
+.hop-to {
+    background-image: url(https://user-images.githubusercontent.com/64815650/87613461-00ada300-c6d3-11ea-92d9-47cded5c1550.png);
+    background-size: cover;
+    background-position: top;
+}
 
 .contact {
     display: flex;
