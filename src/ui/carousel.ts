@@ -39,9 +39,6 @@ export class UiCarousel extends HTMLElement {
 
         .container {
           overflow: hidden;
-          margin: -${this.marginBleed}px;
-          max-width: fit-content;
-          
           @media (pointer: coarse) {
             overflow: scroll;
           }
@@ -75,6 +72,10 @@ export class UiCarousel extends HTMLElement {
           padding: 0 ${this.gapWidth}px;
           transition: transform 0.5s ease-in-out;
           max-width: fit-content;
+
+          @media (prefers-reduces-motion: reduce) {
+            transition: none;
+          }
         }
       </style>
     `;
@@ -91,46 +92,38 @@ export class UiCarousel extends HTMLElement {
 
     this.prevButton?.addEventListener("click", () => this.move(-1));
     this.nextButton?.addEventListener("click", () => this.move(1));
-    window.addEventListener("resize", () => this.resetPosition());
+    window.addEventListener("resize", () => this.updateDimensions());
+    console.log(this)
   }
 
   connectedCallback() {
-
-
-
-    this.updatePosition();
+    this.updateDimensions();
   }
 
   move(direction: 1 | -1) {
-    if (!this.track || this.items.length === 0) return;
-
-    this.trackWidth = this.track.scrollWidth + this.gapWidth ?? 0;
-    this.visibleWidth = this.track.clientWidth ?? 0;
-    this.itemWidth = this.items[0].clientWidth + this.gapWidth || 0;
-    this.visibleItems = Math.floor(this.visibleWidth / this.itemWidth);
-
     this.index = (this.index || 0) + direction * this.visibleItems;
     this.index = Math.max(0, Math.min(this.index, this.items.length - this.visibleItems));
     this.updatePosition();
   }
 
-  resetPosition() {
+  updateDimensions() {
     if (!this.items.length) return;
 
     if (this.track) {
-      this.track.style.transform = `translateX(0px)`;
       this.trackWidth = this.track?.scrollWidth ?? 0 + this.gapWidth ?? 0;
       this.visibleWidth = this.track?.clientWidth ?? 0;
       this.itemWidth = this.items[0].clientWidth + this.gapWidth || 0;
       this.visibleItems = Math.floor(this.visibleWidth / this.itemWidth);
+      this.index = 0;
+      this.updatePosition();
     }
+
     if (this.visibleItems >= this.items.length) {
       this.nextButton!.style.display = "none";
       this.prevButton!.style.display = "none";
     } else {
       this.nextButton!.style.display = "inline";
       this.prevButton!.style.display = "inline";
-      console.log(this.visibleItems)
     }
 
   }
