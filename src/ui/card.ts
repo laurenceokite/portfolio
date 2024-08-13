@@ -15,7 +15,7 @@ export class UiCard extends HTMLElement {
           position: relative;
           border: 2px solid #aaa;
           border-radius: 8px;
-          box-shadow: 0 0 6px 3px #333;
+          box-shadow: 0 0 12px 0 rgba(155,155,155, 0.3);
 
           &::after {
             content: '';

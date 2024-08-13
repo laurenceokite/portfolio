@@ -2,6 +2,19 @@ import './style.css';
 import { UiCard } from './ui/card';
 import { UiCarousel } from './ui/carousel';
 import { SquareTerminal, ChevronLeft, ChevronRight, Github, Linkedin, Mail } from "lucide-static";
+import nodejsSvg from "./svg/node.svg";
+import dotnetSvg from "./svg/dotnet.svg";
+import golangSvg from "./svg/golang.svg";
+import nginxSvg from "./svg/nginx.svg";
+import dockerSvg from "./svg/docker.svg";
+import linuxSvg from "./svg/linux.svg";
+import typescriptSvg from "./svg/typescript.svg"
+import viteSvg from "./svg/vite.svg"
+import svelteSvg from "./svg/svelte.svg"
+import vueSvg from "./svg/vue.svg"
+import reactSvg from "./svg/react.svg"
+import lessSvg from "./svg/less.svg"
+import tailwindSvg from "./svg/tailwind.svg"
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <div>
@@ -49,12 +62,9 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     </header>
 
     <section class="about-me">
-      <details>
-      <summary>Read More About Me</summary>
-      <p>As a former food service professional in the beginning of my software development career, I feel I have found my path. The constant iteration and improvement, fast paced learning environment, and continual challenge have enamored me with the field and the art of software. I relish the feeling of a small win, a simple optimization or a moment to learn something new.</p>
-      <p>Currently I am spending honing my development skills and deep-diving into new technologies. I love improving my development environment and workflow, and learning about design  patterns that I can apply in real business environments. I consider myself a full-stack engineer and love working on front-end and back-end as well as infrastructure development. My strength and ethos in all three is the same; clean and simple design, and great UX.
+      <p><span class="start">&rsaquo;&nbsp;</span>As a former food service professional in the beginning of my software development career, I feel I have found my path. The constant iteration and improvement, fast paced learning environment, and continual challenge have enamored me with the field and the art of software. I relish the feeling of a small win, a simple optimization or a moment to learn something new.</p>
+      <p>Currently I am spending honing my development skills and deep-diving into new technologies. I love improving my development environment and workflow, and learning about design  patterns that I can apply in real business environments. I love working on the front- and back-end as well as on infrastructure development. My ethos in all three is the same: clean, simple design and great user experience<span class="end">.</span>
       </p>
-      </details>
     </section>
     <section class="skill-section">
       <h2 class="title">
@@ -71,13 +81,13 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 
         <ul slot="items" class="skill-items">
           <li class="item">
+            <h3 class="visually-hidden">Node JS</h3>
             <ui-card class="skill-card">
               <div class="container">
               <img 
                 class="nodejs"
                 alt=""
-                src="src/svg/node.svg"
-                style="--drop-shadow-color: #689f63"
+                src="${nodejsSvg}"
               >
               <ul class="skill-text">
                 <li>Write scalable, full-stack applications entirely in JavaScript.</li>
@@ -89,12 +99,12 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 
           <li>
             <ui-card class="skill-card">
-
+              <h3 class="visually-hidden">.NET Core</h3>
               <div class="container">
               <img 
                 class="dotnet"
                 alt=""
-                src="src/svg/dotnet.svg"
+                src="${dotnetSvg}"
                 style="--drop-shadow-color: #512BD4"
               >
               <ul class="skill-text">
@@ -108,13 +118,12 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 
           <li>
             <ui-card class="skill-card">
-
+              <h3 class="visually-hidden">Golang</h3>
               <div class="container">
               <img 
                 class="golang"
                 alt=""
-                src="src/svg/golang.svg"
-                style="--drop-shadow-color: #00ACD7"
+                src="${golangSvg}"
               >
               <ul class="skill-text">
                 <li>
@@ -129,12 +138,12 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
           <li>
             <ui-card class="skill-card">
 
+              <h3 class="visually-hidden">NGINX</h3>
               <div class="container">
                 <img 
                   class="nginx"
                   alt=""
-                  src="src/svg/nginx.svg"
-                  style="--drop-shadow-color: #090"
+                  src="${nginxSvg}"
                 >
                 <ul class="skill-text">
                   <li>
@@ -150,13 +159,12 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 
           <li>
             <ui-card class="skill-card">
-
+              <h3 class="visually-hidden">Docker</h3>
               <div class="container">
               <img 
                 class="docker"
                 alt=""
-                src="src/svg/docker.svg"
-                style="--drop-shadow-color: #394d54"
+                src="${dockerSvg}"
               >
               <ul class="skill-text">
                 <li>Provides containerization to isolate applications and their dependencies, ensuring consistent environments.</li>
@@ -167,12 +175,12 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
           </li>
           <li>
             <ui-card class="skill-card">
+              <h3 class="visually-hidden">Linux</h3>
               <div class="container">
               <img 
                 class="linux"
                 alt=""
-                src="src/svg/linux.svg"
-                style="--drop-shadow-color: #ccc"
+                src="${linuxSvg}"
               >
               <ul class="skill-text">
                 <li>Free and open-source, with a large community of developers and extensive documentation.</li>
@@ -185,7 +193,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
       </ui-carousel>
 
       <h2 class="title">
-        I Build Blazingly Fast &trade; 🚀 Front-Ends with...
+        I Build Blazingly Fast 🚀 Client-Side Apps with...
       </h2>
       <ui-carousel class="skill-carousel">
         <button slot="previous" class="button">
@@ -194,6 +202,127 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
         <button slot="next" class="button">
           ${ChevronRight}
         </button>
+        <ul slot="items" class="skill-items">
+          <li class="item">
+            <h3 class="visually-hidden">Typescript</h3>
+            <ui-card class="skill-card">
+              <div class="container">
+                <img 
+                  class="typescript"
+                  alt=""
+                  src="${typescriptSvg}"
+                >
+                <div class="skill-text">
+                  <p>
+                      TypeScript allows me to write JavaScript code that is self-documenting and type-safe at compile time. It's an indispensable tool for moving quickly in complex codebases, catching errors early, and ensuring maintainable, scalable solutions.
+                  </p>
+                </div>
+              </div>
+            </ui-card>
+          </li>
+          <li class="item">
+            <h3 class="visually-hidden">Vite</h3>
+            <ui-card class="skill-card">
+              <div class="container">
+                <img 
+                  class="vite"
+                  alt=""
+                  src="${viteSvg}"
+                >
+                <div class="skill-text">
+                  <p>
+                      Vite provides a lightning-fast development environment, with instant hot module replacement and optimized build processes. It takes the pain out of setting up modern web projects, letting me focus on coding rather than configuration.
+                  </p>
+                </div>
+              </div>
+            </ui-card>
+          </li>
+          <li class="item">
+            <h3 class="visually-hidden">Svelte</h3>
+            <ui-card class="skill-card">
+              <div class="container">
+                <img 
+                  class="svelte"
+                  alt=""
+                  src="${svelteSvg}"
+                >
+                <div class="skill-text">
+                  <p>
+                      Svelte is a revolutionary framework that compiles components to highly efficient JavaScript, reducing the overhead typically associated with frameworks. This means faster load times and smoother user experiences, with minimal effort.
+                  </p>
+                </div>
+              </div>
+            </ui-card>
+          </li>
+          <li class="item">
+            <h3 class="visually-hidden">Vue JS</h3>
+            <ui-card class="skill-card">
+              <div class="container">
+                <img 
+                  class="vue"
+                  alt=""
+                  src="${vueSvg}"
+                >
+                <div class="skill-text">
+                  <p>
+                      Vue.js is my go-to for building intuitive and dynamic user interfaces. Its reactive data binding and component-based architecture make it easy to create sophisticated apps that are both fast and flexible.
+                  </p>
+                </div>
+              </div>
+            </ui-card>
+          </li>
+          <li class="item">
+            <h3 class="visually-hidden">React</h3>
+            <ui-card class="skill-card">
+              <div class="container">
+                <img 
+                  class="react"
+                  alt=""
+                  src="${reactSvg}"
+                >
+                <div class="skill-text">
+                  <p>
+                      React is an industry juggernaut that has revolutionized front-end development with its powerful component-based architecture and virtual DOM. I appreciate its embrace of functional programming principles, which promotes modular, composable code and enhances reusability.
+                  </p>
+                </div>
+              </div>
+            </ui-card>
+          </li>
+          <li class="item">
+            <h3 class="visually-hidden">Less</h3>
+            <ui-card class="skill-card">
+              <div class="container">
+                <img 
+                  class="less"
+                  alt=""
+                  src="${lessSvg}"
+                >
+                <div class="skill-text">
+                  <p>
+                      Less extends CSS with powerful features like variables, nesting, and mixins, making stylesheets more maintainable and modular. It streamlines the process of managing complex styles, keeping code DRY and clean.
+                  </p>
+                </div>
+              </div>
+            </ui-card>
+          </li>
+          <li class="item">
+            <h3 class="visually-hidden">Tailwind</h3>
+            <ui-card class="skill-card">
+              <div class="container">
+                <img 
+                  class="tailwind"
+                  alt=""
+                  src="${tailwindSvg}"
+                  style="--drop-shadow-color: #689f63"
+                >
+                <div class="skill-text">
+                  <p>
+                      Tailwind CSS arms me with the power to design directly in my markup with utility-first classes, allowing for rapid prototyping and consistent styling. It's a game-changer for building responsive, modern UIs with ease.
+                  </p>
+                </div>
+              </div>
+            </ui-card>
+          </li>
       </ui-carousel>
     </section>
   </div>

@@ -8,7 +8,7 @@ export class UiCarousel extends HTMLElement {
   itemWidth = 0;
   visibleItems = 0;
   index = 0;
-  gapWidth = 10;
+  gapWidth = 16;
   marginBleed = 8;
 
   // TODO: Make some of these props configurable..
@@ -40,6 +40,7 @@ export class UiCarousel extends HTMLElement {
         .container {
           overflow: hidden;
           margin: -${this.marginBleed}px;
+          max-width: fit-content;
           
           @media (pointer: coarse) {
             overflow: scroll;
@@ -51,6 +52,7 @@ export class UiCarousel extends HTMLElement {
           bottom: 0;
           top: 0;
           z-index: 90;
+          padding: 8px 0;
 
           &.previous {
             left: 0;
@@ -70,8 +72,9 @@ export class UiCarousel extends HTMLElement {
           grid-template-rows: 1fr; 
           grid-auto-flow: column;
           gap: ${this.gapWidth}px;
-          padding: 0 ${this.marginBleed}px;
+          padding: 0 ${this.gapWidth}px;
           transition: transform 0.5s ease-in-out;
+          max-width: fit-content;
         }
       </style>
     `;
@@ -88,16 +91,20 @@ export class UiCarousel extends HTMLElement {
 
     this.prevButton?.addEventListener("click", () => this.move(-1));
     this.nextButton?.addEventListener("click", () => this.move(1));
+    window.addEventListener("resize", () => this.resetPosition());
   }
 
   connectedCallback() {
+
+
+
     this.updatePosition();
   }
 
   move(direction: 1 | -1) {
     if (!this.track || this.items.length === 0) return;
 
-    this.trackWidth = this.track.scrollWidth ?? 0;
+    this.trackWidth = this.track.scrollWidth + this.gapWidth ?? 0;
     this.visibleWidth = this.track.clientWidth ?? 0;
     this.itemWidth = this.items[0].clientWidth + this.gapWidth || 0;
     this.visibleItems = Math.floor(this.visibleWidth / this.itemWidth);
@@ -105,6 +112,27 @@ export class UiCarousel extends HTMLElement {
     this.index = (this.index || 0) + direction * this.visibleItems;
     this.index = Math.max(0, Math.min(this.index, this.items.length - this.visibleItems));
     this.updatePosition();
+  }
+
+  resetPosition() {
+    if (!this.items.length) return;
+
+    if (this.track) {
+      this.track.style.transform = `translateX(0px)`;
+      this.trackWidth = this.track?.scrollWidth ?? 0 + this.gapWidth ?? 0;
+      this.visibleWidth = this.track?.clientWidth ?? 0;
+      this.itemWidth = this.items[0].clientWidth + this.gapWidth || 0;
+      this.visibleItems = Math.floor(this.visibleWidth / this.itemWidth);
+    }
+    if (this.visibleItems >= this.items.length) {
+      this.nextButton!.style.display = "none";
+      this.prevButton!.style.display = "none";
+    } else {
+      this.nextButton!.style.display = "inline";
+      this.prevButton!.style.display = "inline";
+      console.log(this.visibleItems)
+    }
+
   }
 
   updatePosition() {
