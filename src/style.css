@@ -287,10 +287,6 @@ header {
 footer {
   text-align: center;
   background-color: rgba(155, 155, 155, 0.3);
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
 }
 
 @media (prefers-color-scheme: light) {

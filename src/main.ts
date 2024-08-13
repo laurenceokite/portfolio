@@ -377,11 +377,10 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
             </li>
       </ui-carousel>
     </section>
-
-    <footer>
-      Created by Laurence Okite &copy;2024
-    </footer>
   </div>
+  <footer>
+    Created by Laurence Okite &copy;2024
+  </footer>
 `;
 
 customElements.define("ui-card", UiCard);
