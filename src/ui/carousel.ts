@@ -93,7 +93,6 @@ export class UiCarousel extends HTMLElement {
     this.prevButton?.addEventListener("click", () => this.move(-1));
     this.nextButton?.addEventListener("click", () => this.move(1));
     window.addEventListener("resize", () => this.updateDimensions());
-    console.log(this)
   }
 
   connectedCallback() {

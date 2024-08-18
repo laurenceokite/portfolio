@@ -8,13 +8,14 @@ import golangSvg from "./svg/golang.svg";
 import nginxSvg from "./svg/nginx.svg";
 import dockerSvg from "./svg/docker.svg";
 import linuxSvg from "./svg/linux.svg";
-import typescriptSvg from "./svg/typescript.svg"
-import viteSvg from "./svg/vite.svg"
-import svelteSvg from "./svg/svelte.svg"
-import vueSvg from "./svg/vue.svg"
-import reactSvg from "./svg/react.svg"
-import lessSvg from "./svg/less.svg"
-import tailwindSvg from "./svg/tailwind.svg"
+import typescriptSvg from "./svg/typescript.svg";
+import viteSvg from "./svg/vite.svg";
+import svelteSvg from "./svg/svelte.svg";
+import vueSvg from "./svg/vue.svg";
+import reactSvg from "./svg/react.svg";
+import lessSvg from "./svg/less.svg";
+import tailwindSvg from "./svg/tailwind.svg";
+import { AudioOscillator } from './audio-oscillator';
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <div class="main-container">
@@ -65,6 +66,8 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
       <p>Currently I am spending honing my development skills and deep-diving into new technologies. I love improving my development environment and workflow, and learning about design  patterns that I can apply in real business environments. I love working on the front- and back-end as well as on infrastructure development. My ethos in all three is the same: clean, simple design and great user experience<span class="end">.</span>
       </p>
     </section>
+
+    
     <section class="skill-section">
         <h2 class="title">
           Server-Side Technologies I Love ❤️
@@ -377,11 +380,20 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
             </li>
       </ui-carousel>
     </section>
+    <section class="oscillator-section">
+      <ui-card>
+        <div class="__card-inner">
+          <audio-oscillator></audio-oscillator>
+        </div>
+      </ui-card>
+    </section>
+
   </div>
   <footer>
     Created by Laurence Okite &copy;2024
   </footer>
 `;
 
+customElements.define("audio-oscillator", AudioOscillator);
 customElements.define("ui-card", UiCard);
 customElements.define("ui-carousel", UiCarousel);

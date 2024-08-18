@@ -16,6 +16,7 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+
 body {
   display: flex;
   justify-content: center;
@@ -113,6 +114,7 @@ header {
       margin: 12px;
     }
 
+
     .link {
       height: 100%;
       display: flex;
@@ -168,13 +170,19 @@ header {
   }
 }
 
+.oscillator-section {
+  padding: 32px 16px;
+
+  .__card-inner {
+    padding: 0 24px 16px;
+  }
+}
+
 .skill-section {
-  margin-top: 12px;
   grid-auto-flow: row;
-  gap: 12px;
+  gap: 32px;
 
   .title {
-    padding-top: 16px;
     padding-left: 16px;
     font-weight: 700;
     font-size: 1.25rem;
@@ -200,7 +208,7 @@ header {
     aspect-ratio: 1;
     height: 100%;
     width: 80px;
-    margin: 0 -8px;
+    margin: 0;
     transition: background-color 0.4s;
 
     &:hover:not(:disabled) {
