@@ -3,15 +3,12 @@ export class UiCarousel extends HTMLElement {
   nextButton: HTMLButtonElement | null | undefined;
   track: HTMLElement | null | undefined;
   items: HTMLElement[] = [];
-  trackWidth = 0;
-  visibleWidth = 0;
-  itemWidth = 0;
-  visibleItems = 0;
-  index = 0;
+  private trackWidth = 0;
+  private visibleWidth = 0;
+  private itemWidth = 0;
+  private visibleItems = 0;
+  private index = 0;
   gapWidth = 16;
-  marginBleed = 8;
-
-  // TODO: Make some of these props configurable..
 
   constructor() {
     super();
@@ -22,13 +19,13 @@ export class UiCarousel extends HTMLElement {
     template.innerHTML = `
       <div class="carousel">
         <div class="button previous">
-          <slot name="previous"></slot>
+          <slot name="previous" aria-label="Move carousel backward"></slot>
         </div>
         <div class="container">
           <slot name="items"></slot>
         </div>
         <div class="button next">
-          <slot name="next"></slot>
+          <slot name="next" aria-label="Move carousel forward"></slot>
         </div>
       </div>
 
@@ -80,7 +77,9 @@ export class UiCarousel extends HTMLElement {
       </style>
     `;
     shadow.append(template.content.cloneNode(true));
+  }
 
+  connectedCallback() {
     const prevSlot = this.shadowRoot?.querySelector<HTMLSlotElement>('slot[name="previous"]');
     const nextSlot = this.shadowRoot?.querySelector<HTMLSlotElement>('slot[name="next"]');
     const trackSlot = this.shadowRoot?.querySelector<HTMLSlotElement>('slot[name="items"]');
@@ -92,10 +91,12 @@ export class UiCarousel extends HTMLElement {
 
     this.prevButton?.addEventListener("click", () => this.move(-1));
     this.nextButton?.addEventListener("click", () => this.move(1));
+    trackSlot?.addEventListener("slotchange", () => {
+      this.track = trackSlot?.assignedElements()[0] as HTMLElement;
+      this.items = Array.from(this.track?.children ?? []) as HTMLElement[];
+      this.updateDimensions();
+    })
     window.addEventListener("resize", () => this.updateDimensions());
-  }
-
-  connectedCallback() {
     this.updateDimensions();
   }
 

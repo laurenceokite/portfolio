@@ -1,5 +1,5 @@
 import './style.css';
-import { UiCard } from './ui/card';
+import { SkillCard } from './skill-card';
 import { UiCarousel } from './ui/carousel';
 import { SquareTerminal, ChevronLeft, ChevronRight, Github, Linkedin, Mail } from "lucide-static";
 import nodejsSvg from "./svg/node.svg";
@@ -13,9 +13,9 @@ import viteSvg from "./svg/vite.svg";
 import svelteSvg from "./svg/svelte.svg";
 import vueSvg from "./svg/vue.svg";
 import reactSvg from "./svg/react.svg";
-import lessSvg from "./svg/less.svg";
 import tailwindSvg from "./svg/tailwind.svg";
 import { AudioOscillator } from './audio-oscillator';
+
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <div class="main-container">
@@ -69,323 +69,43 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 
     
     <section class="skill-section">
-        <h2 class="title">
+        <h2 class="__title">
           Server-Side Technologies I Love ❤️
         </h2>
 
-        <ui-carousel class="skill-carousel">
-          <button slot="previous" class="button">
+        <ui-carousel class="__carousel">
+          <button slot="previous" class="__carousel-button">
             ${ChevronLeft}
           </button>
-          <button slot="next" class="button">
+          <button slot="next" class="__carousel-button">
             ${ChevronRight}
           </button>
 
-          <ul slot="items" class="skill-items">
-            <li class="item">
-              <h3 class="visually-hidden">Node JS</h3>
-              <ui-card class="skill-card">
-                <div class="container">
-                  <div class="image">
-                    <img 
-                      class="nodejs"
-                      alt=""
-                      src="${nodejsSvg}"
-                    >
-                  </div>
-                  <ul class="skill-text">
-                    <li>
-                      Write scalable, full-stack applications entirely in JavaScript.
-                    </li>
-                    <li>
-                      Ideal for chat apps, gaming, and live collaboration tools due to its non-blocking, event-driven architecture.
-                    </li>
-                  </ul>
-                </div>
-              </ui-card>
-            </li>
-
-            <li>
-              <ui-card class="skill-card">
-                <h3 class="visually-hidden">.NET Core</h3>
-                <div class="container">
-                  <div class="image">
-                    <img 
-                      class="dotnet"
-                      alt=""
-                      src="${dotnetSvg}"
-                      style="--drop-shadow-color: #512BD4"
-                    >
-                  </div>
-                
-                  <ul class="skill-text">
-                    <li>
-                      Comprehensive set of libraries and tools for building enterprise-grade applicationst on Windows, Linux, and macOS.
-                    </li>
-                    <li>
-                      Supports multiple languages, including C#, F#, and C++.
-                    </li>
-                  </ul>
-                </div>
-
-              </ui-card>
-            </li>
-
-            <li>
-              <ui-card class="skill-card">
-                <h3 class="visually-hidden">Golang</h3>
-                <div class="container">
-                  <div class="image">
-                    <img 
-                      class="golang"
-                      alt=""
-                      src="${golangSvg}"
-                    >
-                  </div>
-                  
-                  <ul class="skill-text">
-                    <li>
-                        Compiled language with high performance and clean syntax. Brings a minimalistic approach to concurrent programming with goroutines and channels.
-                    </li>
-                    <li>
-                        Fast compilation times and a statically linked binary.
-                    </li>
-                  </ul>
-                </div>
-
-              </ui-card>
-            </li>
-
-            <li>
-              <ui-card class="skill-card">
-                <h3 class="visually-hidden">NGINX</h3>
-                <div class="container">
-                  <div class="image">
-                    <img 
-                      class="nginx"
-                      alt=""
-                      src="${nginxSvg}"
-                    >
-                  </div>
-                  
-                  <ul class="skill-text">
-                    <li>
-                      Efficiently handles high traffic and concurrent connections with low resource usage, and provides built-in load balancing. 
-                    </li>
-                    <li>
-                      Acts as a reverse proxy server to improve application security and performance, and can be used to offload SSL/TLS termination, securely handling encryption.
-                    </li>
-                  </ul>
-                </div>
-              </ui-card>
-            </li>
-
-            <li>
-              <ui-card class="skill-card">
-                <h3 class="visually-hidden">Docker</h3>
-                <div class="container">
-                  <div class="image">
-                    <img 
-                      class="docker"
-                      alt=""
-                      src="${dockerSvg}"
-                    >
-                  </div>
-                
-                  <ul class="skill-text">
-                    <li>
-                      Provides containerization to isolate applications and their dependencies, ensuring consistent environments.
-                    </li>
-                    <li>
-                      Manage and deploy different versions of applications with ease, optimize resource usage and speed up development and deployment cycles.
-                    </li>
-                  </ul>
-                </div>
-              </ui-card>
-            </li>
-            <li>
-              <ui-card class="skill-card">
-                <h3 class="visually-hidden">Linux</h3>
-                <div class="container">
-                  <div class="image">
-                    <img 
-                      class="linux"
-                      alt=""
-                      src="${linuxSvg}"
-                    >
-                  </div>
-                
-                  <ul class="skill-text">
-                    <li>Free and open-source, with a large community of developers and extensive documentation.</li>
-                    <li>Reliable and stable, suitable for servers and critical applications.</li>
-                  </ul>
-                </div>
-              </ui-card>
-            </li>
+          <ul slot="items" class="skill-items" id="backend-skills">
           </ul>
         </ui-carousel>
 
-        <h2 class="title">
+    </section>
+    <section class="skill-section">
+      <h2 class="__title">
           I Build Blazingly Fast 🚀 Client-Side Apps with...
         </h2>
-        <ui-carousel class="skill-carousel">
-          <button slot="previous" class="button">
+        <ui-carousel class="__carousel">
+          <button slot="previous" class="__carousel-button">
             ${ChevronLeft}
           </button>
-          <button slot="next" class="button">
+          <button slot="next" class="__carousel-button">
             ${ChevronRight}
           </button>
 
-          <ul slot="items" class="skill-items">
-
-            <li class="item">
-              <h3 class="visually-hidden">Typescript</h3>
-              <ui-card class="skill-card">
-                <div class="container">
-                  <div class="image">
-                    <img 
-                      class="typescript"
-                      alt=""
-                      src="${typescriptSvg}"
-                    >
-                  </div>
-                  <div class="skill-text">
-                    <p>
-                        TypeScript allows me to write JavaScript code that is self-documenting and type-safe at compile time. It's an indispensable tool for moving quickly in complex codebases, catching errors early, and ensuring maintainable, scalable solutions.
-                    </p>
-                  </div>
-                </div>
-              </ui-card>
-            </li>
-
-            <li class="item">
-              <h3 class="visually-hidden">Vite</h3>
-              <ui-card class="skill-card">
-                <div class="container">
-                  <div class="image">
-                    <img 
-                      class="vite"
-                      alt=""
-                      src="${viteSvg}"
-                    >
-                  </div>
-                  <div class="skill-text">
-                    <p>
-                        Vite provides a lightning-fast development environment, with instant hot module replacement and optimized build processes. It takes the pain out of setting up modern web projects, letting me focus on coding rather than configuration.
-                    </p>
-                  </div>
-                </div>
-              </ui-card>
-            </li>
-
-            <li class="item">
-              <h3 class="visually-hidden">Svelte</h3>
-              <ui-card class="skill-card">
-                <div class="container">
-                  <div class="image">
-                    <img 
-                      class="svelte"
-                      alt=""
-                      src="${svelteSvg}"
-                    >
-                  </div>
-                  <div class="skill-text">
-                    <p>
-                        Svelte is a revolutionary framework that compiles components to highly efficient JavaScript, reducing the overhead typically associated with frameworks. This means faster load times and smoother user experiences, with minimal effort.
-                    </p>
-                  </div>
-                </div>
-              </ui-card>
-            </li>
-
-            <li class="item">
-              <h3 class="visually-hidden">Vue JS</h3>
-              <ui-card class="skill-card">
-                <div class="container">
-                  <div class="image">
-                    <img 
-                      class="vue"
-                      alt=""
-                      src="${vueSvg}"
-                    >
-                  </div>
-                  <div class="skill-text">
-                    <p>
-                        Vue.js is my go-to for building intuitive and dynamic user interfaces. Its reactive data binding and component-based architecture make it easy to create sophisticated apps that are both fast and flexible.
-                    </p>
-                  </div>
-                </div>
-              </ui-card>
-            </li>
-
-            <li class="item">
-              <h3 class="visually-hidden">React</h3>
-              <ui-card class="skill-card">
-                <div class="container">
-                  <div class="image">
-                    <img 
-                      class="react"
-                      alt=""
-                      src="${reactSvg}"
-                    >
-                  </div>
-                  <div class="skill-text">
-                    <p>
-                        React is an industry juggernaut that has revolutionized front-end development with its powerful component-based architecture and virtual DOM. I appreciate its embrace of functional programming principles, which promotes modular, composable code and enhances reusability.
-                    </p>
-                  </div>
-                </div>
-              </ui-card>
-            </li>
-            
-            <li class="item">
-              <h3 class="visually-hidden">Less</h3>
-              <ui-card class="skill-card">
-                <div class="container">
-                  <div class="image">
-                    <img 
-                      class="less"
-                      alt=""
-                      src="${lessSvg}"
-                    >
-                  </div>
-                  <div class="skill-text">
-                    <p>
-                        Less extends CSS with powerful features like variables, nesting, and mixins, making stylesheets more maintainable and modular. It streamlines the process of managing complex styles, keeping code DRY and clean.
-                    </p>
-                  </div>
-                </div>
-              </ui-card>
-            </li>
-
-            <li class="item">
-              <h3 class="visually-hidden">Tailwind</h3>
-              <ui-card class="skill-card">
-                <div class="container">
-                  <div class="image">
-                    <img 
-                      class="tailwind"
-                      alt=""
-                      src="${tailwindSvg}"
-                      style="--drop-shadow-color: #689f63"
-                    >
-                  </div>
-                  <div class="skill-text">
-                    <p>
-                        Tailwind CSS arms me with the power to design directly in my markup with utility-first classes, allowing for rapid prototyping and consistent styling. It's a game-changer for building responsive, modern UIs with ease.
-                    </p>
-                  </div>
-                </div>
-              </ui-card>
-            </li>
-      </ui-carousel>
+          <ul slot="items" class="__items" id="frontend-skills">
+          </ul> 
+        </ui-carousel>
     </section>
     <section class="oscillator-section">
-      <ui-card>
-        <div class="__card-inner">
+        <div class="ui-card">
           <audio-oscillator></audio-oscillator>
         </div>
-      </ui-card>
     </section>
 
   </div>
@@ -395,5 +115,124 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 `;
 
 customElements.define("audio-oscillator", AudioOscillator);
-customElements.define("ui-card", UiCard);
+customElements.define("skill-card", SkillCard);
 customElements.define("ui-carousel", UiCarousel);
+
+type SkillCardModel = {
+  title?: string;
+  imageUrl?: string;
+  blurbs?: string[];
+}
+const backendSkills = [
+  {
+    title: "NodeJS",
+    imageUrl: nodejsSvg,
+    blurbs: [
+      "Write scalable, full-stack applications entirely in JavaScript.",
+      "Ideal for chat apps, gaming, and live collaboration tools due to its non-blocking, event-driven architecture."
+    ]
+  },
+  {
+    title: ".NET",
+    imageUrl: dotnetSvg,
+    blurbs: [
+      "Comprehensive set of libraries and tools for building enterprise-grade applications on Windows, Linux, and macOS.",
+      "Supports multiple languages, including C#, F#, and C++."
+    ]
+  },
+  {
+    title: "Golang",
+    imageUrl: golangSvg,
+    blurbs: [
+      "Compiled language with high performance and clean syntax. Brings a minimalistic approach to concurrent programming with goroutines and channels.",
+      "Fast compilation times and a statically linked binary."
+    ]
+  },
+  {
+    title: "NGINX",
+    imageUrl: nginxSvg,
+    blurbs: [
+      "Efficiently handles high traffic and concurrent connections with low resource usage, and provides built-in load balancing.",
+      "Acts as a reverse proxy server to improve application security and performance."
+    ]
+  },
+  {
+    title: "Docker",
+    imageUrl: dockerSvg,
+    blurbs: [
+      "Provides containerization to isolate applications and their dependencies, ensuring consistent environments.",
+      "Manage and deploy different versions of applications with ease, optimize resource usage and speed up development and deployment cycles."
+    ]
+  },
+  {
+    title: "Linux",
+    imageUrl: linuxSvg,
+    blurbs: [
+      "Free and open-source, with a large community of developers and extensive documentation.",
+      "Reliable and stable, suitable for servers and critical applications."
+    ]
+  }
+];
+
+const frontendSkills = [
+  {
+    title: "Typescript",
+    imageUrl: typescriptSvg,
+    blurbs: ["TypeScript allows me to write JavaScript code that is self-documenting and type-safe at compile time. It's an indispensable tool for understanding complex codebases, catching errors early, and ensuring maintainability."]
+  },
+  {
+    title: "Vite",
+    imageUrl: viteSvg,
+    blurbs: [
+      "Vite provides a streamlined bundling alternative to Webpack, with instant hot module replacement and optimized build processes. It comes with sensible configuration out-of-the box, allowing me to focus on development rather than configuration."
+    ]
+  },
+  {
+    title: "Svelte",
+    imageUrl: svelteSvg,
+    blurbs: [
+      "Svelte aims to make interacting with components feel like writing vanilla JS and HTML. It does this by providing a compiler, which not only gives a powerful syntax, but optimizes the output JavaScript."
+    ]
+  },
+  {
+    title: "NodeJS",
+    imageUrl: vueSvg,
+    blurbs: [
+      "Vue.js is my go-to for building dynamic user interfaces. Vue's reactive primitives are push-based and similar to the newly popular Signals model. It uses a compiler to provide performance optimizations as well as using a virtual DOM at runtime."
+    ]
+  },
+  {
+    title: "React",
+    imageUrl: reactSvg,
+    blurbs: [
+      "React is an industry juggernaut that doesn't opts for pull-based reactivity and a virtual DOM. I like its embrace of functional programming principles, which promotes modular components and enhances reusability."
+    ]
+  },
+  {
+    title: "Tailwind",
+    imageUrl: tailwindSvg,
+    blurbs: [
+      "Tailwind provides consistent utility classes for quick prototyping. It only builds the classes you use, keeping your bundle size small."
+    ]
+  }
+];
+
+function makeSkillCard(model: SkillCardModel): SkillCard {
+  const card = document.createElement("skill-card") as SkillCard;
+  card.dataset.imageUrl = model.imageUrl;
+  card.blurbs = model.blurbs ?? [];
+
+  return card;
+}
+
+function makeSkillCardList(models: SkillCardModel[]): HTMLElement[] {
+  return models.map(model => {
+    const node = document.createElement("li");
+    node.append(makeSkillCard(model));
+    node.setAttribute("class", "ui-card __item");
+    node.style.listStyleType = "none";
+    return node;
+  })
+}
+document.querySelector("#frontend-skills")?.append(...makeSkillCardList(frontendSkills));
+document.querySelector("#backend-skills")?.append(...makeSkillCardList(backendSkills));

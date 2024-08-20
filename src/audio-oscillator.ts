@@ -15,6 +15,7 @@ export class AudioOscillator extends HTMLElement {
 
   controllerHeight: number;
   controllerWidth: number;
+  controllerRect: DOMRect | undefined;
   controllerPoint: HTMLElement | null;
 
   canvas: HTMLCanvasElement | null;
@@ -46,7 +47,6 @@ export class AudioOscillator extends HTMLElement {
 
     const template = document.createElement("template");
     template.innerHTML = `
-      <div class="container">
       <div class="outer">
         <div class="oscillator">
           <h2 class="__title">
@@ -88,48 +88,30 @@ export class AudioOscillator extends HTMLElement {
           </div>
         </div>
       </div>
-      </div>
 
       <style>
         :host {
           box-sizing: border-box;
         }
-        .container {
-          container-type: inline-size;
-          width: 100%;
-          height: 100%;
-          max-width: 1200px;
-        }
-
         .outer {
-          display: grid;
-          gap: 16px;
-
           @container (min-width: 900px) { 
             justify-content: space-between;
-            grid-template-rows: auto;
             grid-template-columns: 1fr 1fr;
           }
         }
 
         .__title {
-          width: 100%;
-          margin: 8px 0;
+          margin:  24px 0 16px;
         }
 
         .oscillator {
           display: grid;
-          width: 100%;
-
-          .__title {
-            padding-left: 16px;
-          }
 
           .__pad {
             position: relative;
-            aspect-ratio: 1; 
+            max-width: 95%;
+            aspect-ratio: 1;
             border: 2px solid white;
-            margin: 16px;
             background-color: rgba(155,155,155,0.2);
 
             &::after {
@@ -139,6 +121,7 @@ export class AudioOscillator extends HTMLElement {
               text-align: center;
               position: absolute;
             }
+
             &::before {
               content: "Blend";
               left: -36px;
@@ -161,32 +144,29 @@ export class AudioOscillator extends HTMLElement {
           .__configuration {
             display: flex;
             justify-content: space-between;
-            padding: 16px;
+            margin: 8px 0;
           }
-
 
           .__volume {
             display: flex;
+            flex-wrap: wrap;
             align-items: center;
             gap: 8px;
           }
         }
 
         .oscilloscope {
-          display: grid;
-          grid-template-rows: auto 1fr;
-
           .__container {
             display: flex;
-            height: 100%;
+            margin: auto;
             align-items: center;
+            max-width: 95%;
           }
 
           canvas {
+            flex: 1;
             border: 1px solid black;
-            display: block;
             background-color: #000;
-            width: 100%;
             aspect-ratio: 16/9;
           }
         }
@@ -203,6 +183,7 @@ export class AudioOscillator extends HTMLElement {
     this.canvasContext = this.canvas?.getContext("2d") ?? null;
 
     this.controllerPoint = controller?.querySelector(".__point") ?? null;
+    this.controllerRect = controller?.getBoundingClientRect();
     this.controllerHeight = controller?.clientHeight ?? 0;
     this.controllerWidth = controller?.clientWidth ?? 0;
 
@@ -218,16 +199,20 @@ export class AudioOscillator extends HTMLElement {
       bTypeSelector.value = this.bWaveType;
     }
 
-
     aTypeSelector?.addEventListener("change", (e) => this.aWaveType = (e.target as HTMLInputElement).value as OscillatorType);
     bTypeSelector?.addEventListener("change", (e) => this.bWaveType = (e.target as HTMLInputElement).value as OscillatorType);
     gain?.addEventListener("input", (e) => { this.gainNodeMaster.gain.value = parseFloat((e.target as HTMLInputElement).value) * MAX_GAIN; });
-    controller?.addEventListener("mousedown", this.start.bind(this));
-    controller?.addEventListener("mousemove", this.move.bind(this));
-    window.addEventListener("mouseup", () => this.stop());
+    controller?.addEventListener("pointerdown", this.start.bind(this));
+    controller?.addEventListener("pointermove", this.move.bind(this));
+    controller?.addEventListener("touchstart", (e) => e.preventDefault())
+    controller?.addEventListener("touchmove", (e) => e.preventDefault())
+
+    window.addEventListener("pointerup", () => this.stop());
     window.addEventListener("resize", () => {
       this.controllerHeight = controller?.offsetHeight ?? 0;
       this.controllerWidth = controller?.offsetWidth ?? 0;
+      this.controllerRect = controller?.getBoundingClientRect();
+      console.log(this.controllerRect)
     });
   }
 
@@ -249,7 +234,7 @@ export class AudioOscillator extends HTMLElement {
     return this._playing;
   }
 
-  start(event: MouseEvent) {
+  start(event: PointerEvent) {
     this.oscillatorA = this.audioContext.createOscillator();
     this.oscillatorB = this.audioContext.createOscillator();
     this.oscillatorA.type = this.aWaveType;
@@ -274,19 +259,19 @@ export class AudioOscillator extends HTMLElement {
     this.playing = false;
   }
 
-  move(event: MouseEvent) {
+  move(event: PointerEvent) {
     if (!this.playing) {
       return;
     }
-    const { offsetX, offsetY } = event;
-    const frequency = offsetX / this.controllerWidth * MAX_FREQ;
-    const fade = offsetY / this.controllerHeight;
-    this.setFrequency(frequency);
-    this.crossfade(fade);
+    const x = Math.max(0, Math.min(this.controllerWidth, event.offsetX));
+    const y = Math.max(0, Math.min(this.controllerHeight, event.offsetY));
+
+    this.setFrequency(x / this.controllerWidth * MAX_FREQ);
+    this.crossfade(y / this.controllerHeight);
 
     if (this.controllerPoint) {
-      this.controllerPoint.style.top = `${Math.max(offsetY - 28, 0)}px`;
-      this.controllerPoint.style.left = `${Math.max(offsetX - 28, 0)}px`;
+      this.controllerPoint.style.top = `${Math.max(y - 28, 0)}px`;
+      this.controllerPoint.style.left = `${Math.max(x - 28, 0)}px`;
     }
   }
 
@@ -343,9 +328,5 @@ export class AudioOscillator extends HTMLElement {
 
     this.canvasContext.lineTo(this.canvas.width, this.canvas.height / 2);
     this.canvasContext.stroke();
-  }
-
-  cancelAnimation() {
-
   }
 }
