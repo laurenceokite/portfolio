@@ -305,12 +305,13 @@ export class AudioOscillator extends HTMLElement {
   }
 
   crossfade(factor: number) {
+    if (!this.gainNodeA || !this.gainNodeB) return;
     this.gainNodeA.gain.value = 1 - factor;
     this.gainNodeB.gain.value = factor;
   }
 
   drawOscilloscope() {
-    if (!this.canvas || !this.canvasContext) {
+    if (!this.canvas || !this.canvasContext || !this.analyser) {
       return;
     }
 
