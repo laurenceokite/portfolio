@@ -13,13 +13,13 @@ export class AudioOscillator extends HTMLElement {
   gainNodeB: GainNode;
   analyser: AnalyserNode;
 
-  controllerHeight: number;
-  controllerWidth: number;
+  controllerHeight: number = 0;
+  controllerWidth: number = 0;
   controllerRect: DOMRect | undefined;
-  controllerPoint: HTMLElement | null;
+  controllerPoint: HTMLElement | null = null;
 
-  canvas: HTMLCanvasElement | null;
-  canvasContext: CanvasRenderingContext2D | null;
+  canvas: HTMLCanvasElement | null = null;
+  canvasContext: CanvasRenderingContext2D | null = null;
 
   private _playing = false;
 
@@ -47,7 +47,8 @@ export class AudioOscillator extends HTMLElement {
 
     const template = document.createElement("template");
     template.innerHTML = `
-      <div class="outer">
+      <div class="container --outer">
+        <div class="container --inner">
         <div class="oscillator">
           <h2 class="__title">
             Oscillator
@@ -87,21 +88,32 @@ export class AudioOscillator extends HTMLElement {
             <canvas id="display"></canvas>
           </div>
         </div>
+        </div>
       </div>
 
       <style>
         :host {
           box-sizing: border-box;
         }
-        .outer {
-          @container (min-width: 900px) { 
-            justify-content: space-between;
-            grid-template-columns: 1fr 1fr;
+        .container {
+          &.--outer {
+            container-type: inline-size;
+            padding: 24px;
+          }
+          &.--inner {
+            display: grid;
+            gap: 16px;
+
+            @container (min-width: 900px) {
+              gap: 32px;
+              justify-content: space-between;
+              grid-template-columns: 1fr 1fr;
+            }
           }
         }
 
         .__title {
-          margin:  24px 0 16px;
+          margin: 0 0 16px;
         }
 
         .oscillator {
@@ -109,7 +121,7 @@ export class AudioOscillator extends HTMLElement {
 
           .__pad {
             position: relative;
-            max-width: 95%;
+            max-width: 100%;
             aspect-ratio: 1;
             border: 2px solid white;
             background-color: rgba(155,155,155,0.2);
@@ -144,7 +156,7 @@ export class AudioOscillator extends HTMLElement {
           .__configuration {
             display: flex;
             justify-content: space-between;
-            margin: 8px 0;
+            margin: 0 0 8px;
           }
 
           .__volume {
@@ -156,11 +168,14 @@ export class AudioOscillator extends HTMLElement {
         }
 
         .oscilloscope {
+          display: flex;
+          flex-direction: column;
+
           .__container {
             display: flex;
-            margin: auto;
             align-items: center;
-            max-width: 95%;
+            max-width: 100%;
+            margin: auto 0;
           }
 
           canvas {
@@ -168,18 +183,22 @@ export class AudioOscillator extends HTMLElement {
             border: 1px solid black;
             background-color: #000;
             aspect-ratio: 16/9;
+            margin: auto;
           }
         }
       </style>
     `
     const shadow = this.attachShadow({ mode: "open" });
     shadow.append(template.content.cloneNode(true));
+  }
 
-    const gain = shadow.querySelector<HTMLInputElement>("#gain");
-    const controller = shadow.querySelector<HTMLElement>("#pad");
-    const aTypeSelector = shadow.querySelector<HTMLInputElement>(".__type-options--a");
-    const bTypeSelector = shadow.querySelector<HTMLInputElement>(".__type-options--b");
-    this.canvas = shadow.querySelector<HTMLCanvasElement>("#display");
+  connectedCallback() {
+    const shadow = this.shadowRoot;
+    const gain = shadow?.querySelector<HTMLInputElement>("#gain");
+    const controller = shadow?.querySelector<HTMLElement>("#pad");
+    const aTypeSelector = shadow?.querySelector<HTMLInputElement>(".__type-options--a");
+    const bTypeSelector = shadow?.querySelector<HTMLInputElement>(".__type-options--b");
+    this.canvas = shadow?.querySelector<HTMLCanvasElement>("#display") ?? null;
     this.canvasContext = this.canvas?.getContext("2d") ?? null;
 
     this.controllerPoint = controller?.querySelector(".__point") ?? null;

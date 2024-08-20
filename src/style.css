@@ -213,7 +213,7 @@ header {
   .__title {
     padding-left: 16px;
     font-weight: 700;
-    font-size: 1.25rem;
+    font-size: 1.25remt;
 
     @media (min-width: 800px) {
       font-size: 1.4rem;
