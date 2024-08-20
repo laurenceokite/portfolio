@@ -3,15 +3,16 @@ const INIT_GAIN = MAX_GAIN * 0.8;
 const MAX_FREQ = 1_000;
 
 export class AudioOscillator extends HTMLElement {
+  audioContext?: AudioContext;
   oscillatorA: OscillatorNode | null = null;
   oscillatorB: OscillatorNode | null = null;
   aWaveType: OscillatorType = "sine";
   bWaveType: OscillatorType = "triangle";
-  gainNodeBus: GainNode;
-  gainNodeMaster: GainNode;
-  gainNodeA: GainNode;
-  gainNodeB: GainNode;
-  analyser: AnalyserNode;
+  gainNodeBus?: GainNode;
+  gainNodeMaster?: GainNode;
+  gainNodeA?: GainNode;
+  gainNodeB?: GainNode;
+  analyser?: AnalyserNode;
 
   controllerHeight: number = 0;
   controllerWidth: number = 0;
@@ -23,27 +24,8 @@ export class AudioOscillator extends HTMLElement {
 
   private _playing = false;
 
-  constructor(public audioContext: AudioContext = new (window.AudioContext || (window as any).webkitAudioContext)()) {
+  constructor() {
     super();
-
-    this.gainNodeBus = audioContext.createGain();
-
-    this.gainNodeA = audioContext.createGain();
-    this.gainNodeB = audioContext.createGain();
-    this.gainNodeMaster = audioContext.createGain();
-    this.analyser = audioContext.createAnalyser();
-    this.analyser.fftSize = 1024;
-    this.analyser.smoothingTimeConstant = 0;
-    this.gainNodeMaster.gain.value = INIT_GAIN;
-    this.gainNodeBus.gain.value = .7;
-    this.gainNodeA.gain.value = .5;
-    this.gainNodeB.gain.value = .5;
-
-    this.gainNodeA.connect(this.gainNodeBus);
-    this.gainNodeB.connect(this.gainNodeBus);
-    this.gainNodeBus.connect(this.analyser);
-    this.analyser.connect(this.gainNodeMaster);
-    this.gainNodeMaster.connect(this.audioContext.destination);
 
     const template = document.createElement("template");
     template.innerHTML = `
@@ -193,6 +175,25 @@ export class AudioOscillator extends HTMLElement {
   }
 
   connectedCallback() {
+    this.audioContext = new window.AudioContext();
+    this.gainNodeBus = this.audioContext.createGain();
+
+    this.gainNodeA = this.audioContext.createGain();
+    this.gainNodeB = this.audioContext.createGain();
+    this.gainNodeMaster = this.audioContext.createGain();
+    this.analyser = this.audioContext.createAnalyser();
+    this.analyser.fftSize = 1024;
+    this.analyser.smoothingTimeConstant = 0;
+    this.gainNodeMaster.gain.value = INIT_GAIN;
+    this.gainNodeBus.gain.value = .7;
+    this.gainNodeA.gain.value = .5;
+    this.gainNodeB.gain.value = .5;
+
+    this.gainNodeA.connect(this.gainNodeBus);
+    this.gainNodeB.connect(this.gainNodeBus);
+    this.gainNodeBus.connect(this.analyser);
+    this.analyser.connect(this.gainNodeMaster);
+    this.gainNodeMaster.connect(this.audioContext.destination);
     const shadow = this.shadowRoot;
     const gain = shadow?.querySelector<HTMLInputElement>("#gain");
     const controller = shadow?.querySelector<HTMLElement>("#pad");
@@ -220,7 +221,7 @@ export class AudioOscillator extends HTMLElement {
 
     aTypeSelector?.addEventListener("change", (e) => this.aWaveType = (e.target as HTMLInputElement).value as OscillatorType);
     bTypeSelector?.addEventListener("change", (e) => this.bWaveType = (e.target as HTMLInputElement).value as OscillatorType);
-    gain?.addEventListener("input", (e) => { this.gainNodeMaster.gain.value = parseFloat((e.target as HTMLInputElement).value) * MAX_GAIN; });
+    gain?.addEventListener("input", (e) => { this.gainNodeMaster!.gain.value = parseFloat((e.target as HTMLInputElement).value) * MAX_GAIN; });
     controller?.addEventListener("pointerdown", this.start.bind(this));
     controller?.addEventListener("pointermove", this.move.bind(this));
     controller?.addEventListener("touchstart", (e) => e.preventDefault())
@@ -231,7 +232,6 @@ export class AudioOscillator extends HTMLElement {
       this.controllerHeight = controller?.offsetHeight ?? 0;
       this.controllerWidth = controller?.offsetWidth ?? 0;
       this.controllerRect = controller?.getBoundingClientRect();
-      console.log(this.controllerRect)
     });
   }
 
@@ -254,6 +254,7 @@ export class AudioOscillator extends HTMLElement {
   }
 
   start(event: PointerEvent) {
+    if (!this.audioContext || !this.gainNodeA || !this.gainNodeB) return;
     this.oscillatorA = this.audioContext.createOscillator();
     this.oscillatorB = this.audioContext.createOscillator();
     this.oscillatorA.type = this.aWaveType;
