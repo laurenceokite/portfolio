@@ -239,6 +239,7 @@ export class AudioOscillator extends HTMLElement {
     this._playing = is;
 
     if (this.playing) {
+
       if (this.controllerPoint) {
         this.controllerPoint.style.borderColor = "green";
       }
@@ -247,6 +248,7 @@ export class AudioOscillator extends HTMLElement {
         this.controllerPoint.style.borderColor = "gray";
       }
     }
+
   }
 
   get playing() {
@@ -255,6 +257,7 @@ export class AudioOscillator extends HTMLElement {
 
   start(event: PointerEvent) {
     if (!this.audioContext || !this.gainNodeA || !this.gainNodeB) return;
+    this.audioContext.resume();
     this.oscillatorA = this.audioContext.createOscillator();
     this.oscillatorB = this.audioContext.createOscillator();
     this.oscillatorA.type = this.aWaveType;
@@ -272,6 +275,8 @@ export class AudioOscillator extends HTMLElement {
   }
 
   stop() {
+    this.audioContext?.suspend();
+    console.log(this.audioContext?.state)
     this.oscillatorA?.stop();
     this.oscillatorB?.stop();
     this.oscillatorA = null;
