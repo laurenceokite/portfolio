@@ -9,7 +9,7 @@ export class SkillCard extends HTMLElement {
   constructor() {
     super();
 
-    const shadow = this.attachShadow({ mode: 'open' });
+    const shadow = this.attachShadow({ mode: "open" });
 
     this.template.innerHTML = `
       <div class="skill-card">
@@ -26,19 +26,15 @@ export class SkillCard extends HTMLElement {
       <style>
         .skill-card {
           container-type: inline-size;
-          aspect-ratio: 16/9;
           display: grid;
-
-          width: 40vw;
-          max-width: 600px;
-          min-width: 350px;
+          aspect-ratio: 16/9;
           grid-template-rows: 1fr 1fr;
 
           .__image {
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 8px 0;
+            padding: 4px 0;
             overflow: hidden;
 
             img {
@@ -56,22 +52,23 @@ export class SkillCard extends HTMLElement {
             background-color: rgba(155, 155, 155, 0.2);
             border-radius: 0 0 6px 6px;
             list-style-type: none;
-            font-size: .8rem;
+            font-size: 1rem;
             text-align: center;
             line-height: 1.25;
             display: flex;
-            padding: 16px;
+            padding: 4px;
             flex-direction: column;
 
             @container (min-width: 500px) {
-              font-size: 1.1rem;
+              font-size: 1.25rem;
+              padding: 16px;
             }
 
             p {
-              margin: 8px 8px 0;
+              margin: 0;
 
               @container (min-width: 500px) {
-                margin: 12px 12px 0;
+                margin: 12px 0 0;
               }
             }
           }
@@ -109,12 +106,11 @@ export class SkillCard extends HTMLElement {
     if (name === "data-image-url" && this.imageEl) {
       this.imageEl.src = newValue;
     }
-
   }
 
   private appendBlurbs() {
     if (!this.blurbEl) return;
-    const nodes = this._blurbs.map(blurb => {
+    const nodes = this._blurbs.map((blurb) => {
       const node = document.createElement("p");
       node.innerText = blurb;
       return node;
@@ -122,4 +118,3 @@ export class SkillCard extends HTMLElement {
     this.blurbEl.replaceChildren(...nodes);
   }
 }
-

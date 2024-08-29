@@ -1,7 +1,14 @@
-import './style.css';
-import { SkillCard } from './skill-card';
-import { UiCarousel } from './ui/carousel';
-import { SquareTerminal, ChevronLeft, ChevronRight, Github, Linkedin, Mail } from "lucide-static";
+import "./style.css";
+import { SkillCard } from "./skill-card";
+import { UiCarousel } from "./ui/carousel";
+import {
+  SquareTerminal,
+  ChevronLeft,
+  ChevronRight,
+  Github,
+  Linkedin,
+  Mail,
+} from "lucide-static";
 import nodejsSvg from "./svg/node.svg";
 import dotnetSvg from "./svg/dotnet.svg";
 import golangSvg from "./svg/golang.svg";
@@ -14,10 +21,9 @@ import svelteSvg from "./svg/svelte.svg";
 import vueSvg from "./svg/vue.svg";
 import reactSvg from "./svg/react.svg";
 import tailwindSvg from "./svg/tailwind.svg";
-import { AudioOscillator } from './audio-oscillator';
+import { AudioOscillator } from "./audio-oscillator";
 
-
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
+document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
   <div class="main-container">
     <header>
       <div class="title-container">
@@ -110,7 +116,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 
   </div>
   <footer>
-    Created by Laurence Okite &copy;2024
+    Made by Laurence Okite in 2024
   </footer>
 `;
 
@@ -122,99 +128,89 @@ type SkillCardModel = {
   title?: string;
   imageUrl?: string;
   blurbs?: string[];
-}
+};
 const backendSkills = [
   {
     title: "NodeJS",
     imageUrl: nodejsSvg,
-    blurbs: [
-      "Write scalable, full-stack applications entirely in JavaScript.",
-      "Ideal for chat apps, gaming, and live collaboration tools due to its non-blocking, event-driven architecture."
-    ]
+    blurbs: ["Write scalable, full-stack applications entirely in JavaScript."],
   },
   {
     title: ".NET",
     imageUrl: dotnetSvg,
     blurbs: [
-      "Comprehensive set of libraries and tools for building enterprise-grade applications on Windows, Linux, and macOS.",
-      "Supports multiple languages, including C#, F#, and C++."
-    ]
+      "Comprehensive set of libraries and tools for building enterprise-grade, cross-platform applications.",
+    ],
   },
   {
     title: "Golang",
     imageUrl: golangSvg,
-    blurbs: [
-      "Compiled language with high performance and clean syntax. Brings a minimalistic approach to concurrent programming with goroutines and channels.",
-      "Fast compilation times and a statically linked binary."
-    ]
+    blurbs: ["Compiled language with high performance and clean syntax."],
   },
   {
     title: "NGINX",
     imageUrl: nginxSvg,
     blurbs: [
-      "Efficiently handles high traffic and concurrent connections with low resource usage, and provides built-in load balancing.",
-      "Acts as a reverse proxy server to improve application security and performance."
-    ]
+      "Efficiently handles high traffic and concurrent connections with low resource usage.",
+    ],
   },
   {
     title: "Docker",
     imageUrl: dockerSvg,
     blurbs: [
       "Provides containerization to isolate applications and their dependencies, ensuring consistent environments.",
-      "Manage and deploy different versions of applications with ease, optimize resource usage and speed up development and deployment cycles."
-    ]
+    ],
   },
   {
     title: "Linux",
     imageUrl: linuxSvg,
     blurbs: [
       "Free and open-source, with a large community of developers and extensive documentation.",
-      "Reliable and stable, suitable for servers and critical applications."
-    ]
-  }
+    ],
+  },
 ];
 
 const frontendSkills = [
   {
     title: "Typescript",
     imageUrl: typescriptSvg,
-    blurbs: ["TypeScript allows me to write JavaScript code that is self-documenting and type-safe at compile time. It's an indispensable tool for understanding complex codebases, catching errors early, and ensuring maintainability."]
+    blurbs: [
+      "TypeScript allows me to write JavaScript code that is self-documenting and type-safe at compile time.",
+    ],
   },
   {
     title: "Vite",
     imageUrl: viteSvg,
     blurbs: [
-      "Vite provides a streamlined bundling alternative to Webpack, with instant hot module replacement and optimized build processes. It comes with sensible configuration out-of-the box, allowing me to focus on development rather than configuration."
-    ]
+      "Vite provides a streamlined bundling alternative to Webpack, with instant hot module replacement and optimized build processes.",
+    ],
   },
   {
     title: "Svelte",
     imageUrl: svelteSvg,
     blurbs: [
-      "Svelte aims to make interacting with components feel like writing vanilla JS and HTML. It does this by providing a compiler, which not only gives a powerful syntax, but optimizes the output JavaScript."
-    ]
+      "Svelte makes interacting with components feel like writing vanilla JS and HTML.",
+    ],
   },
   {
     title: "NodeJS",
     imageUrl: vueSvg,
-    blurbs: [
-      "Vue.js is my go-to for building dynamic user interfaces. Vue's reactive primitives are push-based and similar to the newly popular Signals model. It uses a compiler to provide performance optimizations as well as using a virtual DOM at runtime."
-    ]
+    blurbs: ["Vue.js is my go-to for building dynamic user interfaces."],
   },
   {
     title: "React",
     imageUrl: reactSvg,
     blurbs: [
-      "React is an industry juggernaut that doesn't opts for pull-based reactivity and a virtual DOM. I like its embrace of functional programming principles, which promotes modular components and enhances reusability."
-    ]
+      "React is an industry juggernaut that has set the standard for modern UI frameworks.",
+    ],
   },
   {
     title: "Tailwind",
     imageUrl: tailwindSvg,
     blurbs: [
-      "Tailwind provides consistent utility classes for quick prototyping. It only builds the classes you use, keeping your bundle size small."
-    ]
-  }
+      "Tailwind provides consistent utility classes for quick prototyping.",
+    ],
+  },
 ];
 
 function makeSkillCard(model: SkillCardModel): SkillCard {
@@ -226,13 +222,17 @@ function makeSkillCard(model: SkillCardModel): SkillCard {
 }
 
 function makeSkillCardList(models: SkillCardModel[]): HTMLElement[] {
-  return models.map(model => {
+  return models.map((model) => {
     const node = document.createElement("li");
     node.append(makeSkillCard(model));
     node.setAttribute("class", "ui-card __item");
     node.style.listStyleType = "none";
     return node;
-  })
+  });
 }
-document.querySelector("#frontend-skills")?.append(...makeSkillCardList(frontendSkills));
-document.querySelector("#backend-skills")?.append(...makeSkillCardList(backendSkills));
+document
+  .querySelector("#frontend-skills")
+  ?.append(...makeSkillCardList(frontendSkills));
+document
+  .querySelector("#backend-skills")
+  ?.append(...makeSkillCardList(backendSkills));
